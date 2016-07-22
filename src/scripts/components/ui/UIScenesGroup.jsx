@@ -15,33 +15,35 @@ class UIScenesGroup extends React.Component {
   static propTypes = {
     sceneRoute: PropTypes.string.isRequired,
     scenes: PropTypes.func.isRequired,
+    children: PropTypes.any,
   };
 
   getAnimation() {
-    return {
-      [this.props.sceneRoute]: {
-        handler: this.props.scenes(),
-        opacity: spring(1, fastEaseOut),
-      },
-    };
+    const { sceneRoute } = this.props;
+    return [{
+      key: sceneRoute,
+      data: this.props.scenes(),
+      style: { opacity: spring(1, fastEaseOut) },
+    }];
   }
 
   willEnter() {
-    return { handler: this.props.scenes(), opacity: spring(0, fastEaseOut) };
+    return { opacity: spring(0, fastEaseOut) };
   }
 
-  willLeave(key, anim) {
-    return { handler: anim.handler, opacity: spring(0, fastEaseOut) };
+  willLeave() {
+    return { opacity: spring(0, fastEaseOut) };
   }
 
-  handleScenesGroup(anim) {
-    const scenes = _.map(_.keys(anim), (key) => {
-      const sceneAnim = anim[key];
+  handleScenesGroup(interpolatedStyles) {
+    console.log(interpolatedStyles);
+    const scenes = _.map(_.keys(interpolatedStyles), (key) => {
+      const sceneAnim = interpolatedStyles[key];
       const sceneStyle = { opacity: sceneAnim.opacity };
       const style = [styles.sceneWrapper, sceneStyle];
       return (
         <div key={`${key}-scene-trans`} style={style}>
-          {sceneAnim.handler}
+          {sceneAnim.data}
         </div>
       );
     });
