@@ -1,0 +1,1 @@
+export SnkrVoteScene from './SnkrVoteScene';
