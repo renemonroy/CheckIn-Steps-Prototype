@@ -1,7 +1,7 @@
 import { snkrs as initialState } from '../constants/initialStates';
 
-function Progress(state = initialState) {
+function snkrs(state = initialState) {
   return state;
 }
 
-export default Progress;
+export default snkrs;

@@ -36,7 +36,6 @@ class UIScenesGroup extends React.Component {
   }
 
   handleScenesGroup(interpolatedStyles) {
-    console.log(interpolatedStyles);
     const scenes = _.map(_.keys(interpolatedStyles), (key) => {
       const sceneAnim = interpolatedStyles[key];
       const sceneStyle = { opacity: sceneAnim.opacity };
