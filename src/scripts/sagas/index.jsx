@@ -1,14 +1,30 @@
 import fetch from 'isomorphic-fetch';
 import { fork, take, call, put } from 'redux-saga/effects';
-import { UIActionType, TriviasActionType } from '../constants/ActionTypes';
-import { TriviasActions } from '../actions';
 import { config } from '../constants/Globals';
+import { hashHistory } from 'react-router';
+import { UIActions, TriviasActions, SnkrsActions } from '../actions';
+import { UIActionType, TriviasActionType, SnkrsActionType } from '../constants/ActionTypes';
 
 /** Services ----------------- */
 
-function callApi(endpoint) {
-  return fetch(`https://${config.API_ROOT}${endpoint}`)
-    .then(response => response.json());
+const fullUrl = endpoint => `https://${config.API_ROOT}${endpoint}`;
+
+function apiGet(endpoint) {
+  return fetch(fullUrl(endpoint)).then(res => res.json());
+}
+
+function apiPost(endpoint, args) {
+  return fetch(fullUrl(endpoint), {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(args),
+  })
+  .then(res => res.json())
+  .catch(err => console.log(err));
 }
 
 
@@ -17,7 +33,7 @@ function callApi(endpoint) {
 function* watchNavigate() {
   while (true) {
     const { pathname } = yield take(UIActionType.NAVIGATE);
-    yield history.push(pathname);
+    yield hashHistory.push(pathname);
   }
 }
 
@@ -26,14 +42,46 @@ function* watchNavigate() {
 function* watchFetchTriviasAction() {
   while (true) {
     yield take(TriviasActionType.FETCH_TRIVIAS);
-    const trivias = yield call(callApi, '/trivias');
+    const trivias = yield call(apiGet, '/trivias');
     yield put(TriviasActions.receiveTrivias(trivias));
   }
+}
+
+function* watchVoteFor() {
+  while (true) {
+    const { triviaId, choiceId } = yield take(TriviasActionType.VOTE_FOR);
+    const res = yield call(apiPost, '/trivias/vote-for', {
+      triviaId: parseInt(triviaId, 10),
+      choiceId: parseInt(choiceId, 10),
+    });
+    yield put(SnkrsActions.fetchSnkrs());
+    yield put(UIActions.navigate(`/snkrs/${res.snkrId}`));
+  }
+}
+
+/** Snkrs -------------------- */
+
+function* watchFetchSnkrsAction() {
+  while (true) {
+    yield take(SnkrsActionType.FETCH_SNKRS);
+    const snkrs = yield call(apiGet, '/snkrs');
+    yield put(SnkrsActions.receiveSnkrs(snkrs));
+  }
+}
+
+
+/** Initializer -------------- */
+
+function* startSaga() {
+  yield put(TriviasActions.fetchTrivias());
 }
 
 export default function* root() {
   yield [
     fork(watchNavigate),
     fork(watchFetchTriviasAction),
+    fork(watchVoteFor),
+    fork(watchFetchSnkrsAction),
+    fork(startSaga),
   ];
 }
