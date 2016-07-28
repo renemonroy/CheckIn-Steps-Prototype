@@ -1,3 +1,4 @@
+require('./UIScene.styl');
 import React, { PropTypes } from 'react';
 import Radium from 'radium';
 import cx from 'classnames';
@@ -21,7 +22,7 @@ class UIScene extends React.Component {
   render() {
     const { name, header, sidebar, content, style } = this.props;
     const { base, withHeaderStyle, withoutHeaderStyle } = styles.mainStyle;
-    const className = cx({ [`${name}-scene`]: true });
+    const className = cx({ [`${name}-scene`]: true, 'ui-scene': true });
     const sceneStyles = [styles.sceneStyle.base, style];
     const mainStyles = [base, header ? withHeaderStyle : withoutHeaderStyle];
     return (
