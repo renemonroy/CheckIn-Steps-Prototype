@@ -5,3 +5,6 @@ export const fetchTrivias = () =>
 
 export const receiveTrivias = trivias =>
   ({ type: ActionType.RECEIVE_TRIVIAS, trivias });
+
+export const voteFor = (triviaId, choiceId) =>
+  ({ type: ActionType.VOTE_FOR, triviaId, choiceId });
