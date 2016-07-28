@@ -2,8 +2,8 @@ import React, { PropTypes, Component } from 'react';
 import { UIScene } from '../ui';
 import { connect } from 'react-redux';
 
-@connect((state, props) => ({
-  snkr: state.Snkrs.get(props.params.snkrId).toJS(),
+@connect((state, { params }) => ({
+  snkr: state.snkrs.get(params.snkrId),
 }))
 class NewSnkrScene extends Component {
 
@@ -11,24 +11,18 @@ class NewSnkrScene extends Component {
 
   static propTypes = {
     snkr: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
     params: PropTypes.object,
+    dispatch: PropTypes.func,
   };
 
   static defaultProps = {
     snkr: {},
+    params: {},
   };
 
-  static contextTypes = {
-    location: PropTypes.object,
-  };
-
-  getContext() {
-    return { location: this.props.location };
-  }
-
-  renderContent() {
-    const { description } = this.props.snkr;
+  renderSnkr() {
+    const { snkr } = this.props;
+    const { description } = snkr.toJS();
     return (
       <div>
         <p>{description}</p>
@@ -38,11 +32,10 @@ class NewSnkrScene extends Component {
 
   render() {
     const { snkr } = this.props;
-    console.log('asdalsdas');
     return (
       <UIScene
         name="newsnkr"
-        content={() => (Object.keys(snkr).length > 0 ? this.renderContent() : null)}
+        content={() => (Object.keys(snkr).length > 0 ? this.renderSnkr() : null)}
       />
     );
   }

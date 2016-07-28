@@ -7,4 +7,8 @@ export const TriviasActionType = {
   RECEIVE_TRIVIAS: 'RECEIVE_TRIVIAS',
   VOTE_FOR: 'VOTE_FOR',
 };
+
+export const SnkrsActionType = {
+  FETCH_SNKRS: 'FETCH_SNKRS',
+  RECEIVE_SNKRS: 'RECEIVE_SNKRS',
 };
