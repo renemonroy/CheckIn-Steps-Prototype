@@ -5,6 +5,7 @@ export const UIActionType = {
 export const TriviasActionType = {
   FETCH_TRIVIAS: 'FETCH_TRIVIAS',
   RECEIVE_TRIVIAS: 'RECEIVE_TRIVIAS',
+  RECEIVE_TRIVIA: 'RECEIVE_TRIVIA',
   VOTE_FOR: 'VOTE_FOR',
 };
 

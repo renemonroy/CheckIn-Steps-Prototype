@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import { delay } from 'redux-saga';
 import { fork, take, call, put } from 'redux-saga/effects';
 import { config } from '../constants/Globals';
 import { hashHistory } from 'react-router';
@@ -55,6 +56,8 @@ function* watchVoteFor() {
       choiceId: parseInt(choiceId, 10),
     });
     yield put(SnkrsActions.fetchSnkrs());
+    yield put(TriviasActions.receiveTrivia(res.trivia));
+    yield delay(2500);
     yield put(UIActions.navigate(`/snkrs/${res.snkrId}`));
   }
 }
