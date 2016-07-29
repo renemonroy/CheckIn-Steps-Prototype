@@ -1,5 +1,6 @@
 export const UIActionType = {
   NAVIGATE: 'NAVIGATE',
+  PLAY_AUDIO: 'PLAY_AUDIO',
 };
 
 export const TriviasActionType = {

@@ -1,5 +1,6 @@
+require('./App.styl');
 import React, { PropTypes, Component } from 'react';
-import { UIContent, UIScenesGroup } from './ui';
+import { UIContent, UIScenesGroup, UIPlayer } from './ui';
 
 class App extends Component {
 
@@ -17,6 +18,7 @@ class App extends Component {
         <UIContent>
           <UIScenesGroup scenes={() => children} sceneRoute={loc.pathname} />
         </UIContent>
+        <UIPlayer />
       </div>
     );
   }
