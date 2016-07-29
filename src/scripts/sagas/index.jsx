@@ -77,6 +77,7 @@ function* watchFetchSnkrsAction() {
 /** Initializer -------------- */
 
 function* startSaga() {
+  yield delay(1000);
   yield put(TriviasActions.fetchTrivias());
 }
 

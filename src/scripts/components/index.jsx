@@ -19,6 +19,7 @@ class App extends Component {
           <UIScenesGroup scenes={() => children} sceneRoute={loc.pathname} />
         </UIContent>
         <UIPlayer />
+        <span className="preload-font ncss-brand">Nike</span>
       </div>
     );
   }

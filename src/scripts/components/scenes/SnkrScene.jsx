@@ -20,6 +20,13 @@ class NewSnkrScene extends Component {
     params: {},
   };
 
+  componentWillMount() {
+    const { snkr, dispatch } = this.props;
+    if (snkr.length <= 0) {
+      
+    }
+  }
+
   renderSnkr() {
     const { snkr } = this.props;
     const { description } = snkr.toJS();

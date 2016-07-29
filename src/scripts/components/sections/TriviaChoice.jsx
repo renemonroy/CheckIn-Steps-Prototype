@@ -57,7 +57,7 @@ class TriviaChoice extends Component {
         <Motion style={buttonStyle}>
           {({ scale }) =>
             <div
-              className="choice ncss-brand h1 u-va-m z0"
+              className="trivia-choice ncss-brand h1 u-va-m z0"
               onTouchStart={::this.handleTouchStart}
               onTouchEnd={::this.handleTouchEnd}
               style={{
