@@ -1,0 +1,1 @@
+export TriviaChoice from './TriviaChoice';
