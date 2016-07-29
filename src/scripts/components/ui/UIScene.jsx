@@ -43,9 +43,10 @@ class UIScene extends React.Component {
 styles = {
   sceneStyle: {
     base: {
-      height: 'calc(100% - 2.1rem)',
+      // height: 'calc(100% - 2.1rem)',
+      height: '100%',
       width: '100%',
-      margin: '2.1rem 0 0',
+      margin: '0',
     },
   },
   headerStyle: {
@@ -84,7 +85,6 @@ styles = {
     flex: '1 1',
     order: 2,
     overflowY: 'auto',
-    padding: '2.6rem 2.2rem',
   },
 };
 
