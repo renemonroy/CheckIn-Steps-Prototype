@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { UIScene } from '../ui';
 import { connect } from 'react-redux';
+import { SnkrsActions } from '../../actions';
 
 @connect((state, { params }) => ({
   snkr: state.snkrs.get(params.snkrId),
@@ -21,10 +22,18 @@ class NewSnkrScene extends Component {
   };
 
   componentWillMount() {
-    const { snkr, dispatch } = this.props;
-    if (snkr.length <= 0) {
-      
+    const { dispatch } = this.props;
+    if (!this.hasSnkrData()) {
+      dispatch(SnkrsActions.fetchSnkrs());
     }
+  }
+
+  shouldComponentUpdate() {
+    return !this.hasSnkrData();
+  }
+
+  hasSnkrData() {
+    return Object.keys(this.props.snkr).length > 0;
   }
 
   renderSnkr() {
@@ -38,11 +47,10 @@ class NewSnkrScene extends Component {
   }
 
   render() {
-    const { snkr } = this.props;
     return (
       <UIScene
         name="newsnkr"
-        content={() => (Object.keys(snkr).length > 0 ? this.renderSnkr() : null)}
+        content={() => (this.hasSnkrData() ? this.renderSnkr() : null)}
       />
     );
   }
