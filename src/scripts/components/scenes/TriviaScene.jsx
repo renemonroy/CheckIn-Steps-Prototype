@@ -1,3 +1,4 @@
+require('./TriviaScene.styl');
 import React, { PropTypes, Component } from 'react';
 import { UIScene } from '../ui';
 import { connect } from 'react-redux';
@@ -23,8 +24,22 @@ class TriviaScene extends Component {
 
   renderLoading() {
     return (
-      <div>
-        <p>Loading...</p>
+      <div className="ncss-container fixed-fluid p4-sm u-sm-t u-full-height">
+        <div className="trivia-scene-content u-sm-tc u-va-m u-align-center u-sm-tr">
+          <div className="ncss-row pb12-md pb12-lg">
+            <h2 className="ncss-brand placeholder bg-offwhite"></h2>
+          </div>
+          <div className="ncss-row">
+            <div className="ncss-col-sm-6 u-align-center avatar pl1-sm choice-col">
+              <div className="trivia-choice ncss-brand h1 u-va-m z0 placeholder bg-offwhite" />
+              <div className="ncss-brand h3 text-color-dark-grey placeholder bg-offwhite" />
+            </div>
+            <div className="ncss-col-sm-6 u-align-center avatar pl1-sm choice-col">
+              <div className="trivia-choice ncss-brand h1 u-va-m z0 placeholder bg-offwhite" />
+              <div className="ncss-brand h3 text-color-dark-grey placeholder bg-offwhite" />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -61,9 +76,9 @@ class TriviaScene extends Component {
     const { trivia } = this.props;
     return (
       <UIScene
-        name="snkr-trivia"
+        name="trivia"
         content={() => (Object.keys(trivia).length > 0 ?
-          this.renderContent() : null
+          this.renderContent() : this.renderLoading()
         )}
       />
     );
