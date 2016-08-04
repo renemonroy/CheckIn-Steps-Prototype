@@ -23,10 +23,9 @@ class UIScene extends React.Component {
     const { name, header, sidebar, content, style } = this.props;
     const { base, withHeaderStyle, withoutHeaderStyle } = styles.mainStyle;
     const className = cx({ [`${name}-scene`]: true, 'ui-scene': true });
-    const sceneStyles = [styles.sceneStyle.base, style];
     const mainStyles = [base, header ? withHeaderStyle : withoutHeaderStyle];
     return (
-      <section className={className} style={sceneStyles}>
+      <section className={className} style={style}>
         {header ? <div style={styles.headerStyle}>{header()}</div> : null}
         <div style={mainStyles}>
           {sidebar ? <div style={styles.sidebarStyle}>{sidebar()}</div> : null}
@@ -41,14 +40,6 @@ class UIScene extends React.Component {
 /** Scene Styles
  *----------------------------------------------------------------------------*/
 styles = {
-  sceneStyle: {
-    base: {
-      // height: 'calc(100% - 2.1rem)',
-      height: '100%',
-      width: '100%',
-      margin: '0',
-    },
-  },
   headerStyle: {
     backgroundColor: '#202223',
     height: '11.3rem',
