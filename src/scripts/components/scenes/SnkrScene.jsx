@@ -15,6 +15,7 @@ class NewSnkrScene extends Component {
     snkr: PropTypes.object.isRequired,
     params: PropTypes.object,
     dispatch: PropTypes.func,
+    style: PropTypes.object,
   };
 
   static defaultProps = {
@@ -49,27 +50,41 @@ class NewSnkrScene extends Component {
     this.setState({ largeImageLoaded: true });
   }
 
-  renderLargeImage(src) {
+  renderLargeImage(src, unlocked) {
     const largeImageClass = this.state.largeImageLoaded ? ' loaded' : '';
+    const blurValue = (100 - (unlocked * 100)) / 5;
     return (
       <img
         src={src}
         role="presentation"
         onLoad={::this.handleLargeImageLoad}
         className={`snkr-large-image${largeImageClass}`}
+        style={{ filter: `blur(${blurValue}px)` }}
       />
+    );
+  }
+
+  renderProgress(progress) {
+    const width = this.state.largeImageLoaded ? progress * 100 : 0;
+    return (
+      <div className="snkr-progress-wrapper">
+        <div
+          className="snkr-progress"
+          style={{ width: `${width}%` }}
+        />
+      </div>
     );
   }
 
   renderSnkr() {
     const { snkr } = this.props;
-    const { description, assets } = snkr.toJS();
+    const { title, subtitle, description, assets, unlocked } = snkr.toJS();
     const { previewLoaded } = this.state;
     const previewLoadedClass = previewLoaded ? ' loaded' : '';
     return (
-      <div className="ncss-container fixed-fluid p4-sm u-sm-t u-full-height">
-        <div className="trivia-scene-content u-sm-tc u-va-m u-align-center u-sm-tr">
-          <div className="ncss-col-sm-6 u-align-center p0-sm choice-col snkr-img-wrapper">
+      <div className="ncss-container fixed-fluid p0-sm u-sm-t u-full-height">
+        <div className="trivia-scene-content u-sm-tc u-align-center u-sm-tr">
+          <div className="ncss-row u-align-center p0-sm m0-sm snkr-img-wrapper">
             <img
               src={assets.preload}
               role="presentation"
@@ -77,11 +92,18 @@ class NewSnkrScene extends Component {
               className={`snkr-img-preview${previewLoadedClass}`}
             />
             {previewLoaded ?
-              this.renderLargeImage(assets.default) :
+              this.renderLargeImage(assets.default, unlocked) :
               null
             }
           </div>
-          <p>{description}</p>
+          {this.renderProgress(unlocked)}
+          <div className="ncss-row ncss-row mt4-sm pt4-sm pb2-sm pl4-sm pr4-sm">
+            <div className="ncss-col-sm-12">
+              <h2 className="ncss-brand">{title}</h2>
+              <h5 className="ncss-brand pb4-sm">{subtitle}</h5>
+              <p>{description}</p>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -91,6 +113,7 @@ class NewSnkrScene extends Component {
     return (
       <UIScene
         name="snkr"
+        style={this.props.style}
         content={() => (this.hasSnkrData() ? this.renderSnkr() : null)}
       />
     );
