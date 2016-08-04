@@ -44,7 +44,7 @@ function* watchFetchTriviasAction() {
   while (true) {
     yield take(TriviasActionType.FETCH_TRIVIAS);
     const trivias = yield call(apiGet, '/trivias');
-    yield put(TriviasActions.receiveTrivias(trivias));
+    yield put(TriviasActions.updateTrivias(trivias));
   }
 }
 
@@ -55,11 +55,10 @@ function* watchVoteFor() {
       triviaId: parseInt(triviaId, 10),
       choiceId: parseInt(choiceId, 10),
     });
-    yield delay(500);
-    yield put(SnkrsActions.fetchSnkrs());
-    yield put(TriviasActions.receiveTrivia(res.trivia));
+    yield put(TriviasActions.updateTrivia(res.trivia));
     yield put(UIActions.playAudio(res.trivia[triviaId].choices[choiceId].assets.audio));
-    yield delay(2500);
+    yield put(SnkrsActions.fetchSnkrs());
+    yield delay(2000);
     yield put(UIActions.navigate(`/snkrs/${res.snkrId}`));
   }
 }
@@ -70,7 +69,7 @@ function* watchFetchSnkrsAction() {
   while (true) {
     yield take(SnkrsActionType.FETCH_SNKRS);
     const snkrs = yield call(apiGet, '/snkrs');
-    yield put(SnkrsActions.receiveSnkrs(snkrs));
+    yield put(SnkrsActions.updateSnkrs(snkrs));
   }
 }
 
