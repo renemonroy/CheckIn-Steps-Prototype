@@ -15,7 +15,7 @@ class UIScenesGroup extends React.Component {
     const { sceneRoute, scenes } = this.props;
     return (
       <RouteTransition
-        component={'div'}
+        component={false}
         pathname={sceneRoute}
         className="ui-scenes-group"
         {...presets.slideLeft}
