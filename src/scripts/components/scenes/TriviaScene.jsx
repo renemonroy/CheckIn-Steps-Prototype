@@ -15,6 +15,7 @@ class TriviaScene extends Component {
   static propTypes = {
     trivia: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired,
+    style: PropTypes.object,
   };
 
   static defaultProps = {
@@ -45,7 +46,7 @@ class TriviaScene extends Component {
   }
 
   renderContent() {
-    const { trivia, params } = this.props;
+    const { trivia, params, style } = this.props;
     const { question, choices, voted } = trivia.toJS();
     const { triviaId } = params;
     return (
@@ -73,10 +74,11 @@ class TriviaScene extends Component {
   }
 
   render() {
-    const { trivia } = this.props;
+    const { trivia, style } = this.props;
     return (
       <UIScene
         name="trivia"
+        style={style}
         content={() => (Object.keys(trivia).length > 0 ?
           this.renderContent() : this.renderLoading()
         )}
