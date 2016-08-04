@@ -18,7 +18,7 @@ class UIScenesGroup extends React.Component {
         component={'div'}
         pathname={sceneRoute}
         className="ui-scenes-group"
-        {...presets.fade}
+        {...presets.slideLeft}
       >
         {scenes()}
       </RouteTransition>
