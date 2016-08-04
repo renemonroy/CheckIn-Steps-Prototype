@@ -64,23 +64,36 @@ class NewSnkrScene extends Component {
     );
   }
 
-  renderProgress(progress) {
+  renderProgress(progress, remaining) {
     const width = this.state.largeImageLoaded ? progress * 100 : 0;
+    const opacity = this.state.largeImageLoaded ? 1 : 0;
+    const remaininActive = this.state.largeImageLoaded ? ' active' : '';
     return (
-      <div className="snkr-progress-wrapper">
+      <div
+        className="snkr-progress-wrapper"
+        style={{ opacity }}
+      >
         <div
           className="snkr-progress"
           style={{ width: `${width}%` }}
-        />
+        >
+          <div className={`snkr-remaining${remaininActive}`}>
+            <h2>{remaining}</h2>
+            <h6>More</h6>
+            <div className="snkr-remaining-arrow" />
+          </div>
+        </div>
       </div>
     );
   }
 
   renderSnkr() {
     const { snkr } = this.props;
-    const { title, subtitle, description, assets, unlocked } = snkr.toJS();
+    const { title, subtitle, description, assets, votes } = snkr.toJS();
     const { previewLoaded } = this.state;
     const previewLoadedClass = previewLoaded ? ' loaded' : '';
+    const percent = votes.current / votes.limit;
+    const remaining = votes.limit - votes.current;
     return (
       <div className="ncss-container fixed-fluid p0-sm u-sm-t u-full-height">
         <div className="trivia-scene-content u-sm-tc u-align-center u-sm-tr">
@@ -92,11 +105,11 @@ class NewSnkrScene extends Component {
               className={`snkr-img-preview${previewLoadedClass}`}
             />
             {previewLoaded ?
-              this.renderLargeImage(assets.default, unlocked) :
+              this.renderLargeImage(assets.default, percent) :
               null
             }
           </div>
-          {this.renderProgress(unlocked)}
+          {this.renderProgress(percent, remaining)}
           <div className="ncss-row ncss-row mt4-sm pt4-sm pb2-sm pl4-sm pr4-sm">
             <div className="ncss-col-sm-12">
               <h2 className="ncss-brand">{title}</h2>

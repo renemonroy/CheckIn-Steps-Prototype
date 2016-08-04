@@ -27,8 +27,42 @@
     background-color: #DDDDDD
     height: 2px
     width: 100%
+    transition: opacity 500ms ease
 
     .snkr-progress
+      position: relative
       background-color: #ff0016
       height: 100%
-      transition: width 500ms linear
+      transition: width 500ms ease
+
+    .snkr-remaining
+      position: absolute
+      opacity: 1
+      right: -26px
+      bottom: 10px
+      border-radius: 40px
+      width: 52px
+      height: 52px
+      background-color: #222222
+      color: #FFFFFF
+      padding-top: 7px
+      opacity: 0
+
+      &.active
+        opacity: 1
+        transition: all 100ms ease-out 500ms
+
+      h6
+        text-transform: uppercase
+        line-height: 10px
+        font-size: 7px
+
+      .snkr-remaining-arrow
+        position: absolute
+        bottom: -6px
+        left: 16px
+        width: 0
+        height: 0
+        border-left: 10px solid transparent
+        border-right: 10px solid transparent
+        border-top: 10px solid #222222
