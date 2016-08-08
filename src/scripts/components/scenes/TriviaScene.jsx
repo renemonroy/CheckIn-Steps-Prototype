@@ -46,7 +46,7 @@ class TriviaScene extends Component {
   }
 
   renderContent() {
-    const { trivia, params, style } = this.props;
+    const { trivia, params } = this.props;
     const { question, choices, voted } = trivia.toJS();
     const { triviaId } = params;
     return (
