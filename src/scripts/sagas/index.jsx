@@ -55,6 +55,7 @@ function* watchVoteFor() {
       triviaId: parseInt(triviaId, 10),
       choiceId: parseInt(choiceId, 10),
     });
+    yield delay(500);
     yield put(TriviasActions.updateTrivia(res.trivia));
     yield put(UIActions.playAudio(res.trivia[triviaId].choices[choiceId].assets.audio));
     yield put(SnkrsActions.fetchSnkrs());
